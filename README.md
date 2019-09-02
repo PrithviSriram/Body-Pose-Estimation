@@ -1,7 +1,7 @@
 ## Results
 
 <p align="left">
-<img src="https://github.com/vatsalg29/pytorch_Realtime_Multi-Person_Pose_Estimation/blob/master/squat_multi.avi", width="720">
+<img src="https://github.com/vatsalg29/Body-Pose-Estimation/blob/master/squat_multi.avi", width="720">
 </p>
 
 ## Instructions to run the code
