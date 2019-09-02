@@ -1,106 +1,25 @@
-## Introduction
-Multi Person PoseEstimation By PyTorch
-
 ## Results
 
 <p align="left">
-<img src="https://github.com/tensorboy/pytorch_Realtime_Multi-Person_Pose_Estimation/blob/master/readme/result.gif", width="720">
+<img src="https://github.com/vatsalg29/pytorch_Realtime_Multi-Person_Pose_Estimation/blob/master/squat_multi.avi", width="720">
 </p>
 
-[![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://opensource.org/licenses/MIT) 
-
-## Require
-1. [Pytorch](http://pytorch.org/)
-2. pytorch-lightning
-
-## Installation
-1. git submodule init && git submodule update
-2. `cd pytorch-lightning`; `python setup.py install`
-
-## Demo
-- Download [converted pytorch model](https://www.dropbox.com/s/ae071mfm2qoyc8v/pose_model.pth?dl=0).
-- Compile the C++ postprocessing: `cd lib/pafprocess; sh make.sh` 
-- `python demo/picture_demo.py` to run the picture demo.
-- `python demo/web_demo.py` to run the web demo.
-
-## Evalute
-- `python evaluate/evaluation.py` to evaluate the model on coco val2017 dataset.
-- It should have `mAP 0.653` for the rtpose, previous rtpose have `mAP 0.577` because we do left and right flip for heatmap and PAF for the evaluation. 
-c
-### Main Results
-
-| model name| mAP |  Inference Time | 
-| :---------: | :---------: |:---------: |
-|[original rtpose]   | 0.653 |-|
-
-Download link:
-[rtpose](https://www.dropbox.com/s/ae071mfm2qoyc8v/pose_model.pth?dl=0)
-
-## Development environment
-
-The code is developed using python 3.6 on Ubuntu 18.04. NVIDIA GPUs are needed. The code is developed and tested using 4 1080ti GPU cards. Other platforms or GPU cards are not fully tested.  
-
-## Quick start
-
-### 1. Preparation
-
-#### 1.1 Prepare the dataset
-- `cd training; bash getData.sh` to obtain the COCO 2017 images in `/data/root/coco/images/`, keypoints annotations in `/data/root/coco/annotations/`,
-make them look like this:
-```
-${DATA_ROOT}
-|-- coco
-    |-- annotations
-        |-- person_keypoints_train2017.json
-        |-- person_keypoints_val2017.json
-    |-- images
-        |-- train2017
-            |-- 000000000009.jpg
-            |-- 000000000025.jpg
-            |-- 000000000030.jpg
-            |-- ... 
-        |-- val2017
-            |-- 000000000139.jpg
-            |-- 000000000285.jpg
-            |-- 000000000632.jpg
-            |-- ... 
-        
+## Instructions to run the code
+1. Follow the steps in both the folders README to get the respective libraries codes running.
+2. First run `python3 web_demo.py` in the `multi-body-pose-estimation` folder to get skeleton. 
+3. Copy the output file to the `detecton` folder.
+4. Run the following to get ghost filter. Once again, edit the file to set input name accordingly.
 
 ```
+python tools/infer_simple.py \
+    --cfg configs/12_2017_baselines/e2e_mask_rcnn_R-101-FPN_2x.yaml \
+    --output-dir /tmp/detectron-visualizations \
+    --image-ext jpg \
+    --wts https://dl.fbaipublicfiles.com/detectron/35861858/12_2017_baselines/e2e_mask_rcnn_R-101-FPN_2x.yaml.02_32_51.SgT4y1cO/output/train/coco_2014_train:coco_2014_valminusminival/generalized_rcnn/model_final.pkl \
+    demo
+```
 
-### 2. How to train the model
-- Modify the data directory in `train/train_VGG19.py` and `python train/train_VGG19.py`
-
-## Related repository
-- CVPR'17, [Realtime Multi-Person Pose Estimation](https://github.com/ZheC/Realtime_Multi-Person_Pose_Estimation).
-
-### Network Architecture
-- testing architecture
-![Teaser?](https://github.com/tensorboy/pytorch_Realtime_Multi-Person_Pose_Estimation/blob/master/readme/pose.png)
-
-- training architecture
-![Teaser?](https://github.com/tensorboy/pytorch_Realtime_Multi-Person_Pose_Estimation/blob/master/readme/training_structure.png)
-
-## Contributions
-
-All contributions are welcomed. If you encounter any issue (including examples of images where it fails) feel free to open an issue.
-
-## Citation
-Please cite the paper in your publications if it helps your research: 
-   
-    @INPROCEEDINGS{8486591, 
-    author={Haoqian Wang and Wang Peng An and X. Wang and L. Fang and J. Yuan}, 
-    booktitle={2018 IEEE International Conference on Multimedia and Expo (ICME)}, 
-    title={Magnify-Net for Multi-Person 2D Pose Estimation}, 
-    year={2018}, 
-    volume={}, 
-    number={}, 
-    pages={1-6}, 
-    month={July},}
-    
-    @InProceedings{cao2017realtime,
-      title = {Realtime Multi-Person 2D Pose Estimation using Part Affinity Fields},
-      author = {Zhe Cao and Tomas Simon and Shih-En Wei and Yaser Sheikh},
-      booktitle = {The IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
-      year = {2017}
-      }
+## Remarks
+1. Before executing any program, open it and change the input and output video path/name accordingly.
+2. Detectron support is for python 2, beware of that.
+3. The main alpha blending code is under the function vis_mask in the file `detectron/detectron/utils/vis.py`. 
