@@ -22,6 +22,7 @@ from __future__ import unicode_literals
 
 import cv2
 import numpy as np
+import pandas as pd
 import os
 
 import pycocotools.mask as mask_util
@@ -96,17 +97,34 @@ def get_class_string(class_index, score, dataset):
 
 def vis_mask(img, mask, col, alpha=0.4, show_border=True, border_thick=1):
     """Visualizes a single binary mask."""
+    #file1 = open("mask.txt", 'a')
+    #df1 = pd.read_csv('mask.csv', header=None)
+    print(mask.shape)
+    fw = int(mask.shape[0] / 2.5)
+    fh = int(mask.shape[1] / 2.5)
+    mask_s = cv2.resize(mask, (fh, fw))
+    print(mask_s.shape)
 
     img = img.astype(np.float32)
+    #print(mask.shape)
+    #df = pd.DataFrame(mask)
+
     idx = np.nonzero(mask)
+    idx_s = np.nonzero(mask_s)
+    #print(np.shape(idx))
+    #with open('mask.txt', 'a') as f:
+    #    f.write(str(idx[0].shape) + '\t' + str(idx[1].shape) + '\n')
+
+    mp = np.array(idx_s).flatten()
+    #mp = mp.astype(np.float32)
+    mp = np.reshape(mp, (1, mp.shape[0]))
+    df = pd.DataFrame(mp)
+    #df = df1.append(df2)
+    print(df)
+
+    df.to_csv('idx_25.csv', mode='a', header=False, index=False)
+
     im2 = img.copy()
-
-    #fgbg = cv2.createBackgroundSubtractorMOG()
-
-    #im2[idx[0], idx[1] - 350, :] = img[idx[0], idx[1], :]
-    #im2[idx[0], idx[1], :] = img[500,20,:]
-    #cv2.imwrite('im2_test.jpg', im2.astype(np.uint8))
-    #cv2.addWeighted(im2, 0.4, img, 0.6, 0, img)
 
     img[idx[0], idx[1] - 350, :] = img[idx[0], idx[1], :] * (alpha) + img[idx[0], idx[1] - 350, :] * (1.0 - alpha)
 

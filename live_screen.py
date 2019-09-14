@@ -23,7 +23,7 @@ if __name__ == "__main__":
     fourcc = cv2.VideoWriter_fourcc('M','J','P','G')
     f_out = cv2.VideoWriter('output.avi', fourcc, 20, (frame_width, frame_height))
     #df = pd.read_csv('./detectron/mask.csv', header=None)
-    with open('./detectron/idx_5.csv') as f:
+    with open('./detectron/idx_25.csv') as f:
         df = pd.DataFrame.from_records(list(gen_rows(f)))
     i = 0
     start_time = time.time()
@@ -67,8 +67,8 @@ if __name__ == "__main__":
             #loopf = loopf[idx[0], idx[1], :]
             #print(loopf.shape)
 
-            fw = int(loopf.shape[0] / 5)
-            fh = int(loopf.shape[1] / 5)
+            fw = int(loopf.shape[0] / 2.5)
+            fh = int(loopf.shape[1] / 2.5)
             #print(loopf.shape)
             #print(str(fw) + " " + str(fh))
             loopf = cv2.resize(loopf, (fh, fw))
@@ -76,7 +76,7 @@ if __name__ == "__main__":
             shape_dst = np.min(oriImg.shape[0:2])
             alpha = 0.4
 
-            oriImg[idx[0], idx[1]-80, :] = oriImg[idx[0], idx[1]-80, :] * (alpha) + loopf[idx[0], idx[1], :] * (1.0 - alpha)
+            oriImg[idx[0], idx[1]-180, :] = oriImg[idx[0], idx[1]-80, :] * (alpha) + loopf[idx[0], idx[1], :] * (1.0 - alpha)
 
             # Display the resulting frame
             #print("End")

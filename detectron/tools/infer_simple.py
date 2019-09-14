@@ -32,6 +32,8 @@ import logging
 import os
 import sys
 import time
+import csv
+import numpy as np
 
 from caffe2.python import workspace
 
@@ -66,7 +68,7 @@ def parse_args():
         '--wts',
         dest='weights',
         help='weights model file (/path/to/model_weights.pkl)',
-        default=None,
+        default="model_final.pkl",
         type=str
     )
     parser.add_argument(
@@ -124,7 +126,7 @@ def main(args):
 
     merge_cfg_from_file(args.cfg)
     cfg.NUM_GPUS = 1
-    args.weights = cache_url(args.weights, cfg.DOWNLOAD_CACHE)
+    #args.weights = cache_url(args.weights, cfg.DOWNLOAD_CACHE)
     assert_and_infer_cfg(cache_urls=False)
 
     assert not cfg.MODEL.RPN_ONLY, \
@@ -140,7 +142,7 @@ def main(args):
     else:
         im_list = [args.im_or_folder]
 
-    video_capture = cv2.VideoCapture('squat_extra_lines.avi') #ENTER FILE NAME HERE
+    video_capture = cv2.VideoCapture('squat_red.avi') #ENTER FILE NAME HERE
     frame_width = int(video_capture.get(3))
     frame_height = int(video_capture.get(4))
     fourcc = cv2.VideoWriter_fourcc(str('M'), str('J'), str('P'), str('G'))
@@ -205,6 +207,10 @@ def main(args):
         )
         #cv2.imwrite('./out/' + out_name, out_frame)
         f_out.write(out_frame)
+        #print(np.array(mask_csv).shape)
+        #with open('mask.csv', 'w') as csvf:
+        #    writer = csv.writer(csvf)
+        #    writer.writerows(mask_csv)
 
 
 if __name__ == '__main__':
