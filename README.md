@@ -7,7 +7,7 @@
 ## Live Screen Results
 
 <p align="left">
-<img src="https://github.com/PrithviSriram/Body-Pose-Estimation/blob/master/test_1.gif", width="720", height="480">
+<img src="https://github.com/PrithviSriram/Body-Pose-Estimation/blob/master/test_2.gif", width="720", height="480">
 </p>
 
 ## Instructions to run the code
