@@ -76,11 +76,11 @@ if __name__ == "__main__":
             shape_dst = np.min(oriImg.shape[0:2])
             alpha = 0.4
 
-            oriImg[idx[0], idx[1]-180, :] = oriImg[idx[0], idx[1]-80, :] * (alpha) + loopf[idx[0], idx[1], :] * (1.0 - alpha)
+            oriImg[idx[0], idx[1]-180, :] = oriImg[idx[0], idx[1]-180, :] * (alpha) + loopf[idx[0], idx[1], :] * (1.0 - alpha)
 
             # Display the resulting frame
             #print("End")
-            #f_out.write(oriImg)
+            #f_out.write(oriImg) # Uncomment this line to save the video
             i = i + 1
 
         cv2.imshow('Video', oriImg)

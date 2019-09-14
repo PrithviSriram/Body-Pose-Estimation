@@ -1,7 +1,13 @@
 ## Results
 
 <p align="left">
-<img src="https://github.com/vatsalg29/Body-Pose-Estimation/blob/master/squat_multi.gif", width="720">
+<img src="https://github.com/PrithviSriram/Body-Pose-Estimation/blob/master/squat_multi.gif", width="720">
+</p>
+
+## Live Screen Results
+
+<p align="left">
+<img src="https://github.com/PrithviSriram/Body-Pose-Estimation/blob/master/test_1.gif", width="720">
 </p>
 
 ## Instructions to run the code
@@ -18,6 +24,8 @@ python tools/infer_simple.py \
     --wts https://dl.fbaipublicfiles.com/detectron/35861858/12_2017_baselines/e2e_mask_rcnn_R-101-FPN_2x.yaml.02_32_51.SgT4y1cO/output/train/coco_2014_train:coco_2014_valminusminival/generalized_rcnn/model_final.pkl \
     demo
 ```
+## Live Screen
+1. Run `python3 live_screen.py` to get the object on live screen. Press `q` to quit once running.
 
 ## Remarks
 1. Before executing any program, open it and change the input and output video path/name accordingly.
